@@ -1,17 +1,20 @@
 import * as alt from 'alt-server';
 import { MARKER_TYPE } from '@AthenaShared/enums/markerTypes';
 import { Objective } from '@AthenaShared/interfaces/job';
-import JOB_DATA from '@AthenaPlugins/postbote/shared/locations';
-import {NPC} from '@AthenaPlugins/postbote/shared/locations';
-import {location} from '@AthenaPlugins/postbote/shared/locations';
+import {location} from '@AthenaPlugins/fwjob/shared/locations';
+import {NPC} from '@AthenaPlugins/fwjob/shared/locations';
+import {JobEvents} from '@AthenaPlugins/fwjob/shared/locations';
+import JOB_DATA from '@AthenaPlugins/fwjob/shared/locations';
 import JobEnums from '@AthenaShared/interfaces/job';
 import { CurrencyTypes } from '@AthenaShared/enums/currency';
 import { Athena } from '@AthenaServer/api/athena';
+import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 
 const START_POINT = {x: 95.94123077392578, y: 6367.181640625, z: 29.375844955444336 -1} ;
 const TOTAL_DROP_OFFS = 5;
 
 export class FwJob {
+    //static JobEvents: any;
 /*
      * Create In-World Job Location(s)
      * @static
@@ -27,13 +30,11 @@ export class FwJob {
             shortRange: true,
             text: 'Fw Warenlieferung',
         });
-        //  Athena.controllers.interaction.add({
-        //      callback: FwJob.begin,
-        //      description: '',
-        //      position: START_POINT,
-        //      range: 2,
-        //      isPlayerOnly: true,
-        //  });
+      Athena.controllers.interaction.add({
+             callback:  FwJob.begin,
+              position: START_POINT,
+             isPlayerOnly: true,
+          });
 
      Athena.controllers.ped.append({
          model: 'A_F_M_FatCult_01',
@@ -41,7 +42,9 @@ export class FwJob {
          heading: 254.62277221679688,
          uid: `${NPC.PREFIX}01`,
      });
-}
+     alt.onClient(JobEvents.ServerClientEvents.BEGIN, FwJob.begin);
+    }
+
     
 
     /**

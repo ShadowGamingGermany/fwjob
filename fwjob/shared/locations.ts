@@ -29,4 +29,8 @@ DROP_OFF_SPOTS,
 export const NPC = {
     PREFIX: 'BERND',
 };
-    
+export const JobEvents = {  
+ServerClientEvents: {
+    BEGIN: 'FwJob:begin',
+},
+};

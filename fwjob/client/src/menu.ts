@@ -2,9 +2,12 @@
 import { NpcWheelMenu } from '@AthenaClient/menus/npc';
 import { IPed } from '@AthenaShared/interfaces/iPed';
 import { IWheelOptionExt } from '@AthenaShared/interfaces/wheelMenu';
-import {NPC} from '@AthenaPlugins/postbote/shared/locations';
-import {FwJob} from '@AthenaPlugins/postbote/server/src/job';
-
+import {JobEvents, NPC} from '@AthenaPlugins/fwjob/shared/locations';
+import {FwJob} from '@AthenaPlugins/fwjob/server/src/job';
+import { AthenaEvents } from '@AthenaClient/systems/athenaEvents';
+import * as alt from 'alt-client';
+import * as native from 'natives';
+import { AthenaClient } from '@AthenaClient/api/athena';
 class InternalFunctions {
     static init() {
         NpcWheelMenu.addInjection(InternalFunctions.handleInjection);
@@ -18,9 +21,9 @@ class InternalFunctions {
 
         options.push({
             name: 'Turn Invisible',
-            callback: () => {
-               FwJob.begin
+            callback:() => { alt.emitServer(JobEvents.ServerClientEvents.BEGIN);
             },
+
         });
 
      options.push({
